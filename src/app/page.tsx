@@ -1,12 +1,22 @@
 'use client';
 
 import React, { useState, ChangeEvent } from 'react';
+import 'regenerator-runtime/runtime';
 
 import Image from 'next/image';
 import TextArea from '@/components/Inputs/TextArea';
+import SpeechRecognitionComponent from '../components/SpeechRecognition/SpeechRecognition';
+import { IconFileUpload, IconVolume } from '@tabler/icons-react';
 
 export default function Home() {
   const [sourceText, setSourceText] = useState<string>('');
+
+  const handleAudioPlayback = (text: string) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+    synth.speak(utterance);
+  };
+
   return (
     <div>
       <div className='h-[50rem] w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center'>
@@ -32,6 +42,18 @@ export default function Home() {
                     }}
                     placeholder='Source Language'
                   />
+                  <div className='flex flex-row justify-between w-full'>
+                    <span className='cursor-pointer flex space-x-2 flex-row'>
+                      <SpeechRecognitionComponent
+                        setSourceText={setSourceText}
+                      />
+                      <IconVolume
+                        size={22}
+                        onClick={() => handleAudioPlayback(sourceText)}
+                      />
+                      {/* <IconFileUpload /> */}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
