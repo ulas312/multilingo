@@ -3,8 +3,12 @@
 import React, { useState, ChangeEvent } from 'react';
 
 import Image from 'next/image';
-import TextArea from '@/components/Inputs/TextArea';
+import TextArea from '../components/Inputs/TextArea';
 import SpeechRecognitionComponent from '../components/SpeechRecognition/SpeechRecognition';
+import { rtfToText } from '../utils/rtfToText';
+import FileUpload from '../components/Inputs/FileUpload';
+import LinkPaste from '../components/Inputs/LinkPaste';
+
 import { IconFileUpload, IconVolume } from '@tabler/icons-react';
 
 export default function Home() {
@@ -14,6 +18,30 @@ export default function Home() {
     const synth = window.speechSynthesis;
     const utterance = new SpeechSynthesisUtterance(text);
     synth.speak(utterance);
+  };
+
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rtfContent = reader.result as string;
+        const text = rtfToText(rtfContent);
+        setSourceText(text);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const handleLinkPaste = async (e: ChangeEvent<HTMLInputElement>) => {
+    const link = e.target.value;
+    try {
+      const response = await fetch(link);
+      const data = await response.text();
+      setSourceText(data);
+    } catch (error) {
+      console.error('Error fetching link content:', error);
+    }
   };
 
   return (
@@ -50,9 +78,16 @@ export default function Home() {
                           size={22}
                           onClick={() => handleAudioPlayback(sourceText)}
                         />
-                        {/* <IconFileUpload /> */}
+                        <FileUpload handleFileUpload={handleFileUpload} />
+                        <LinkPaste handleLinkPaste={handleLinkPaste} />
+                      </span>
+                      <span className='text-sm pr-4'>
+                        {sourceText.length} /2000
                       </span>
                     </div>
+                  </div>
+                  <div className='relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20'>
+                    <div />
                   </div>
                 </div>
               </div>
