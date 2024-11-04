@@ -8,11 +8,37 @@ import SpeechRecognitionComponent from '../components/SpeechRecognition/SpeechRe
 import { rtfToText } from '../utils/rtfToText';
 import FileUpload from '../components/Inputs/FileUpload';
 import LinkPaste from '../components/Inputs/LinkPaste';
+import useTranslate from '../hooks/useTranslate';
+import LanguageSelector from '../components/Inputs/LanguageSelector';
+import SvgDecorations from '../components/SvgDecorations';
+import CategoryLinks from '../components/CategoryLinks';
 
-import { IconFileUpload, IconVolume } from '@tabler/icons-react';
+import {
+  IconCopy,
+  IconStar,
+  IconThumbDown,
+  IconThumbUp,
+  IconVolume,
+} from '@tabler/icons-react';
 
 export default function Home() {
   const [sourceText, setSourceText] = useState<string>('');
+  const [copied, setCopied] = useState<boolean>(false);
+  const [favourite, setFavourite] = useState<boolean>(false);
+  const [languages] = useState<string[]>([
+    'English',
+    'Turkish',
+    'Latvian',
+    'French',
+    'Spanish',
+    'German',
+    'Russian',
+    'Chinese',
+    'Japanese',
+  ]);
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('Latvian');
+
+  const targetText = useTranslate(sourceText, languages);
 
   const handleAudioPlayback = (text: string) => {
     const synth = window.speechSynthesis;
@@ -44,6 +70,27 @@ export default function Home() {
     }
   };
 
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(targetText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleLike = () => {
+    // Implement like logic
+  };
+
+  const handleDislike = () => {};
+
+  const handleFavourite = () => {
+    setFavourite(!favourite);
+    if (!favourite) {
+      localStorage.setItem('favouriteTranslation', targetText);
+    } else {
+      localStorage.removeItem('favouriteTranslation');
+    }
+  };
+
   return (
     <div>
       <div className='w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center'>
@@ -60,7 +107,7 @@ export default function Home() {
               </p>
               <div className='relative mt-7 sm:mt-12 mx-auto max-w-3xl'>
                 <div className='grid gap-4 md:grid-cols-2 grid-cols-1'>
-                  <div className='relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20'>
+                  <div className='relative z-10 p-3 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20'>
                     <TextArea
                       id='source-language'
                       value={sourceText}
@@ -86,11 +133,46 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
-                  <div className='relative z-10 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20'>
-                    <div />
+                  <div className='relative z-10 p-3 flex flex-col space-x-3 border rounded-lg shadow-lg bg-neutral-900 border-neutral-700 shadow-gray-900/20'>
+                    <TextArea
+                      id={'target-language'}
+                      value={targetText}
+                      onChange={() => {}}
+                      placeholder={'Target Language'}
+                    />
+                    <div className='flex flex-row justify-between w-full'>
+                      <span className='cursor-pointer flex space-x-2 flex-row items-center'>
+                        <LanguageSelector
+                          selectedLanguage={selectedLanguage}
+                          setSelectedLanguage={setSelectedLanguage}
+                          languages={languages}
+                        />
+                        <IconVolume
+                          size={22}
+                          onClick={() => handleAudioPlayback(targetText)}
+                        />
+                      </span>
+                      <div className='flex flex-row items-center space-x-2 pr-4 cursor-pointer'>
+                        <IconCopy size={22} onClick={handleCopyToClipboard} />
+                        {copied && (
+                          <span className='text-xs text-green-500'>
+                            Copied!
+                          </span>
+                        )}
+                        <IconThumbUp size={22} onClick={handleLike} />
+                        <IconThumbDown size={22} onClick={handleDislike} />
+                        <IconStar
+                          size={22}
+                          onClick={handleFavourite}
+                          className={favourite ? 'text-yellow-500' : ''}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <SvgDecorations />
               </div>
+              <CategoryLinks />
             </div>
           </div>
         </div>
