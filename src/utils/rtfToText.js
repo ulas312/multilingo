@@ -15,7 +15,6 @@ export function rtfToText(rtf) {
       } else if (match[1] === 'tab') {
         output.push('\t');
       } else if (match[1] === 'uc') {
-        // Unicode character count to skip
         rtfRegex.lastIndex += Number(match[2]);
       } else if (match[1] === "'") {
         output.push(String.fromCharCode(parseInt(match[3], 16)));

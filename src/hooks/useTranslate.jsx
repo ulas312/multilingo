@@ -13,14 +13,14 @@ const useTranslate = (sourceText, selectedLanguage) => {
     const handleTranslate = async (sourceText) => {
       try {
         const response = await openai.chat.completions.create({
-          model: 'gpt-3.5-turbo', // Ensure this is a valid model name
+          model: 'gpt-4o',
           messages: [
             {
               role: 'user',
               content: `You will be provided with a sentence. This sentence: 
               ${sourceText}. Your tasks are to:
               - Detect what language the sentence is in
-              - Translate the sentence into ${selectedLanguage}
+              - Translate the sentence into only the ${selectedLanguage}
               Do not return anything other than the translated sentence.`,
             },
           ],
@@ -30,20 +30,13 @@ const useTranslate = (sourceText, selectedLanguage) => {
         setTargetText(data);
       } catch (error) {
         console.error('Error translating text:', error);
-        if (error.name === 'RateLimitError') {
-          alert(
-            'You have reached the API request limit. Please wait or check your OpenAI plan.'
-          );
-        } else {
-          alert('An error occurred while translating. Please try again later.');
-        }
       }
     };
 
     if (sourceText.trim()) {
       const timeoutId = setTimeout(() => {
         handleTranslate(sourceText);
-      }, 2000);
+      }, 1000); // Adjust the delay as needed
 
       return () => clearTimeout(timeoutId);
     }

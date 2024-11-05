@@ -38,7 +38,7 @@ export default function Home() {
   ]);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('Latvian');
 
-  const targetText = useTranslate(sourceText, languages);
+  const targetText = useTranslate(sourceText, selectedLanguage);
 
   const handleAudioPlayback = (text: string) => {
     const synth = window.speechSynthesis;
