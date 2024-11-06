@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MultiLingo - AI-Powered Language Translation Application
+
+## Introduction
+
+Welcome to **MultiLingo**, an AI-powered language translation application developed as a full-stack project using Next.js and Tailwind CSS. The inspiration for this project came from a recent trip to Latvia, where I struggled to communicate with my parents-in-law due to language barriers. This experience motivated me to brush up on my skills and create an AI-powered solution to overcome such communication gaps.
+
+The application leverages advanced AI models to translate text from a source language into a target language, supporting multiple languages including Spanish, French, German, and Chinese. It also offers additional functionalities like audio playback, text copying, and saving translations as favorites. This project showcases my ability to build responsive, AI-driven applications that can be used across various devices, including desktops, tablets, and mobile phones.
+
+## Features
+
+- **Real-time Translation:** Input text in any supported language and get instant translations.
+- **Multi-Language Support:** Choose from various languages including Spanish, French, German, and more.
+- **Audio Playback:** Listen to the translated text with just one click.
+- **File Upload:** Upload documents to be translated into any supported language.
+- **Responsive Design:** Fully functional across desktop, tablet, and mobile views.
+- **Favorite Translations:** Save your preferred translations for quick access.
+- **Copy to Clipboard:** Easily copy translated text to your clipboard for use elsewhere.
+
+## Demo
+
+### Text Translation
+
+1. Enter text in the source language field.
+2. Select the target language from the dropdown menu.
+3. View the translated text in real-time in the target language field.
+4. Use the audio playback feature to hear the translated text.
+
+### Uploading a File
+
+1. Click on the file upload icon to select a document.
+2. The application will extract and translate the text from the document.
+3. The translated text will be displayed in the target language field.
+
+### Playing Audio
+
+1. After translation, click on the speaker icon to hear the translated text.
+2. The audio will play in the target language.
+
+### Saving a Favorite
+
+1. Translate a text.
+2. Click on the star icon to save the translation to your favorites.
+
+### Copying Translations
+
+1. Click the copy icon to copy the translated text.
+2. Paste it anywhere as needed.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ensure you have the following installed:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js
+- Yarn or npm
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clone the repository from GitHub:
 
-## Learn More
+   ```bash
+   git clone https://github.com/ulas312/multilingo
 
-To learn more about Next.js, take a look at the following resources:
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Navigate to the project directory:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   cd multilingo
 
-## Deploy on Vercel
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Install dependencies (either yarn or npm):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   npm install
+
+   ```
+
+4. Create a .env file in the root directory and add your OpenAI API key (https://openai.com/index/openai-api/):
+   ```bash
+   NEXT_PUBLIC_OPENAI_API_KEY=your-api-key-here
+   ```
+
+### Running the Application
+
+1. Start the development server (either yarn or npm):
+
+   ```bash
+   npm run dev
+
+   ```
+
+2. Open your browser and go to http://localhost:3000 to view the application.
+
+## Future Enhancements
+
+- User Authentication: Implement user profiles and authentication to manage saved translations.
+- Extended Language Support: Add support for more languages and dialects.
+- SaaS Integration: Introduce paid plans for higher character limits and additional features.

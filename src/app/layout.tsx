@@ -1,8 +1,10 @@
 import 'regenerator-runtime/runtime';
 import type { Metadata } from 'next';
+import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
+import Favicon from './favicon.ico';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,9 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <head>
+      <Head>
         <link rel='icon' href='/favicon.ico' type='image/x-icon' />
-      </head>
+      </Head>
       <body className={inter.className}>
         {children}
         <Script src='/preline.js' strategy='afterInteractive' />
